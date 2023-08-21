@@ -1,12 +1,52 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
+  const [userInput, setUserInput] = useState("");
+  const [result, setResult] = useState(0);
+  const [isEqualPressed, setIsEqualPressed] = useState(false);
+
+  const keydownHandler = (e) => {
+    if (isEqualPressed) {
+      if (/[/+\-*]/.test(e.key)) setUserInput(result);
+
+      if (/\d|\./.test(e.key)) {
+        setUserInput("");
+        setResult(0);
+      }
+
+      setIsEqualPressed(false);
+    }
+
+    if (/[0-9]|\./.test(e.key)) setUserInput((prev) => (prev += e.key));
+
+    if (/[/+\-*]/.test(e.key))
+      setUserInput((prev) => (prev += " " + e.key + " "));
+
+    if (e.key === "=") {
+      setResult(eval(userInput));
+      setIsEqualPressed(true);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", keydownHandler);
+
+    return () => {
+      window.removeEventListener("keydown", keydownHandler);
+    };
+  });
+
+  useEffect(() => {
+    console.log(userInput);
+  }, [userInput]);
+
   return (
     <div className="App">
       <div className="container">
         <div id="display">
-          <div className="equation">5 x 2</div>
-          <div className="result">10</div>
+          <div className="equation">{userInput}</div>
+          <div className="result">{result}</div>
         </div>
         <div className="btns">
           <div className="row first-row">
