@@ -10,22 +10,41 @@ function App() {
   const keydownHandler = (e) => {
     const regEx = /\d|[*\-/+.]/;
 
-    if (regEx.test(e.key)) {
-      setDisplay((prev) => (prev += e.key));
+    if (/[*\-+]/.test(e.key)) {
+      const x = display.split(/[-+*/]/);
+
+      setResult((prev) =>
+        prev === ""
+          ? +display
+          : e.key === "+"
+          ? (prev += +x[x.length - 1])
+          : e.key === "-"
+          ? (prev -= +x[x.length - 1])
+          : e.key === "/"
+          ? (prev /= +x[x.length - 1])
+          : (prev *= +x[x.length - 1])
+      );
     }
 
-    if (regEx.test(e.target.innerText)) {
-      setDisplay((prev) => (prev += e.target.innerText));
+    if (regEx.test(e.key)) {
+      if (/[+/\-*]/.test(e.key))
+        setDisplay((prev) => (prev += " " + e.key + " "));
+      else setDisplay((prev) => (prev += e.key));
     }
 
     if (e.key === BACK_SPACE || e.target.innerText === AC) {
-      setDisplay((prev) => prev.substring(0, prev.length - 1));
+      setDisplay("");
+      setResult(0);
       console.clear();
     }
 
     if (/=/.test(e.key) || e.target.innerText === EQUALS) {
-      console.log(display.split(regEx));
+      console.log(display.split(/[-+*/]/g));
     }
+
+    // if (/\d|[*\-/+.]/.test(e.target.innerText)) {
+    //   setDisplay((prev) => (prev += e.target.innerText));
+    // }
   };
 
   useEffect(() => {
@@ -35,10 +54,6 @@ function App() {
       window.removeEventListener("keydown", keydownHandler);
     };
   });
-
-  useEffect(() => {
-    console.log(result);
-  }, [result]);
 
   return (
     <div className="App">
