@@ -2,31 +2,20 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [userInput, setUserInput] = useState("");
   const [result, setResult] = useState(0);
-  const [isEqualPressed, setIsEqualPressed] = useState(false);
+  const [display, setDisplay] = useState("");
 
   const keydownHandler = (e) => {
-    if (isEqualPressed) {
-      if (/[/+\-*]/.test(e.key)) setUserInput(result);
-
-      if (/\d|\./.test(e.key)) {
-        setUserInput("");
-        setResult(0);
-      }
-
-      setIsEqualPressed(false);
+    if (/\d|[*\-/+.]/.test(e.key)) {
+      setDisplay((prev) => (prev += e.key));
     }
 
-    if (/[0-9]|\./.test(e.key)) setUserInput((prev) => (prev += e.key));
-
-    if (/[/+\-*]/.test(e.key))
-      setUserInput((prev) => (prev += " " + e.key + " "));
-
-    if (e.key === "=") {
-      setResult(eval(userInput));
-      setIsEqualPressed(true);
+    if (/\d|[*\-/+.]/.test(e.target.innerText)) {
+      setDisplay((prev) => (prev += e.target.innerText));
     }
+
+    if (e.key === "Backspace" || e.target.innerText === "AC")
+      setDisplay((prev) => prev.substring(0, prev.length - 1));
   };
 
   useEffect(() => {
@@ -38,43 +27,77 @@ function App() {
   });
 
   useEffect(() => {
-    console.log(userInput);
-  }, [userInput]);
+    console.log(result);
+  }, [result]);
 
   return (
     <div className="App">
       <div className="container">
         <div id="display">
-          <div className="equation">{userInput}</div>
+          <div className="equation">{display}</div>
           <div className="result">{result}</div>
         </div>
         <div className="btns">
           <div className="row first-row">
-            <button id="clear">AC</button>
-            <button id="divide">÷</button>
-            <button id="multiply">X</button>
+            <button id="clear" onClick={keydownHandler}>
+              AC
+            </button>
+            <button id="divide" onClick={keydownHandler}>
+              /
+            </button>
+            <button id="multiply" onClick={keydownHandler}>
+              *
+            </button>
           </div>
           <div className="row second-row">
-            <button id="seven">7</button>
-            <button id="eight">8</button>
-            <button id="nine">9</button>
-            <button id="subtract">-</button>
+            <button id="seven" onClick={keydownHandler}>
+              7
+            </button>
+            <button id="eight" onClick={keydownHandler}>
+              8
+            </button>
+            <button id="nine" onClick={keydownHandler}>
+              9
+            </button>
+            <button id="subtract" onClick={keydownHandler}>
+              -
+            </button>
           </div>
           <div className="row third-row">
-            <button id="four">4</button>
-            <button id="five">5</button>
-            <button id="six">6</button>
-            <button id="add">+</button>
+            <button id="four" onClick={keydownHandler}>
+              4
+            </button>
+            <button id="five" onClick={keydownHandler}>
+              5
+            </button>
+            <button id="six" onClick={keydownHandler}>
+              6
+            </button>
+            <button id="add" onClick={keydownHandler}>
+              +
+            </button>
           </div>
           <div className="row fourth-row">
-            <button id="one">1</button>
-            <button id="two">2</button>
-            <button id="three">3</button>
+            <button id="one" onClick={keydownHandler}>
+              1
+            </button>
+            <button id="two" onClick={keydownHandler}>
+              2
+            </button>
+            <button id="three" onClick={keydownHandler}>
+              3
+            </button>
           </div>
           <div className="row fifth-row">
-            <button id="zero">0</button>
-            <button id="decimal">.</button>
-            <button id="equals">=</button>
+            <button id="zero" onClick={keydownHandler}>
+              0
+            </button>
+            <button id="decimal" onClick={keydownHandler}>
+              .
+            </button>
+            <button id="equals" onClick={keydownHandler}>
+              =
+            </button>
           </div>
         </div>
       </div>
