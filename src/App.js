@@ -10,19 +10,21 @@ function App() {
   const keydownHandler = (e) => {
     const regEx = /\d|[*\-/+.]/;
 
+    if (display[display.length - 1] === " " && /[*/\-+]/.test(e.key)) return;
+
     if (/[*\-+]/.test(e.key)) {
-      const x = display.split(/[-+*/]/);
+      const input = display.split(/[-+*/]/);
 
       setResult((prev) =>
         prev === ""
           ? +display
           : e.key === "+"
-          ? (prev += +x[x.length - 1])
+          ? (prev += +input[input.length - 1])
           : e.key === "-"
-          ? (prev -= +x[x.length - 1])
+          ? (prev -= +input[input.length - 1])
           : e.key === "/"
-          ? (prev /= +x[x.length - 1])
-          : (prev *= +x[x.length - 1])
+          ? (prev /= +input[input.length - 1])
+          : (prev *= +input[input.length - 1])
       );
     }
 
