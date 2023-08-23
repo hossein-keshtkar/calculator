@@ -6,38 +6,47 @@ import { AC, BACK_SPACE, EQUALS } from "./utils/keywords";
 function App() {
   const [result, setResult] = useState(0);
   const [display, setDisplay] = useState("");
+  const [operators, setOperators] = useState([]);
 
   const keydownHandler = (e) => {
     const regEx = /\d|[*\-/+.]/;
+    const mainOperators = /[*/\-+]/;
+    const latestOperator = display[display.length - 1];
 
-    if (display[display.length - 1] === " " && /[*/\-+]/.test(e.key))
-      setDisplay((prev) => prev.substring(0, prev.length - 3));
+    if (mainOperators.test(latestOperator) && mainOperators.test(e.key)) {
+      setDisplay((prev) => prev.substring(0, prev.length - 1) + e.key);
+      setOperators([e.key, ...operators]);
+      return;
+    }
 
-    if (/[*\-+]/.test(e.key)) {
-      const input = display.split(/[-+*/]/);
+    if (mainOperators.test(e.key)) {
+      const input = display.split(mainOperators);
+      const latestInput = +input[input.length - 1];
+
+      setOperators([e.key, ...operators]);
+      console.log({ latestInput, operators });
+
+      const prevOperator = operators[0];
 
       setResult((prev) =>
-        prev === ""
-          ? +display
-          : e.key === "+"
-          ? (prev += +input[input.length - 1])
-          : e.key === "-"
-          ? (prev = prev - +input[input.length - 1])
-          : e.key === "/"
-          ? (prev /= +input[input.length - 1])
-          : (prev *= +input[input.length - 1])
+        prev === 0
+          ? +input
+          : prevOperator === "+"
+          ? (prev += latestInput)
+          : prevOperator === "-"
+          ? (prev -= latestInput)
+          : prevOperator === "/"
+          ? (prev /= latestInput)
+          : (prev *= latestInput)
       );
     }
 
-    if (regEx.test(e.key)) {
-      if (/[+/\-*]/.test(e.key))
-        setDisplay((prev) => (prev += " " + e.key + " "));
-      else setDisplay((prev) => (prev += e.key));
-    }
+    if (regEx.test(e.key)) setDisplay((prev) => (prev += e.key));
 
     if (e.key === BACK_SPACE || e.target.innerText === AC) {
       setDisplay("");
       setResult(0);
+      setOperators([]);
       console.clear();
     }
 
