@@ -1,21 +1,31 @@
 import { useEffect, useState } from "react";
+
 import "./App.css";
+import { AC, BACK_SPACE, EQUALS } from "./utils/keywords";
 
 function App() {
   const [result, setResult] = useState(0);
   const [display, setDisplay] = useState("");
 
   const keydownHandler = (e) => {
-    if (/\d|[*\-/+.]/.test(e.key)) {
+    const regEx = /\d|[*\-/+.]/;
+
+    if (regEx.test(e.key)) {
       setDisplay((prev) => (prev += e.key));
     }
 
-    if (/\d|[*\-/+.]/.test(e.target.innerText)) {
+    if (regEx.test(e.target.innerText)) {
       setDisplay((prev) => (prev += e.target.innerText));
     }
 
-    if (e.key === "Backspace" || e.target.innerText === "AC")
+    if (e.key === BACK_SPACE || e.target.innerText === AC) {
       setDisplay((prev) => prev.substring(0, prev.length - 1));
+      console.clear();
+    }
+
+    if (/=/.test(e.key) || e.target.innerText === EQUALS) {
+      console.log(display.split(regEx));
+    }
   };
 
   useEffect(() => {
