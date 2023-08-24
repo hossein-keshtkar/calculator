@@ -4,7 +4,7 @@ import "./App.css";
 import { AC, BACK_SPACE, EQUALS } from "./utils/keywords";
 
 function App() {
-  const [result, setResult] = useState(0);
+  const [result, setResult] = useState(null);
   const [display, setDisplay] = useState("");
   const [operators, setOperators] = useState([]);
 
@@ -12,24 +12,33 @@ function App() {
     const regEx = /\d|[*\-/+.]/;
     const mainOperators = /[*/\-+]/;
     const latestOperator = display[display.length - 1];
+    const latestKeyboardInput = e.key;
 
-    if (mainOperators.test(latestOperator) && mainOperators.test(e.key)) {
-      setDisplay((prev) => prev.substring(0, prev.length - 1) + e.key);
-      setOperators([e.key, ...operators]);
+    if (
+      mainOperators.test(latestOperator) &&
+      mainOperators.test(latestKeyboardInput)
+    ) {
+      setDisplay(
+        (prev) => prev.substring(0, prev.length - 1) + latestKeyboardInput
+      );
+      setOperators([latestKeyboardInput, ...operators]);
       return;
     }
 
-    if (regEx.test(e.key)) setDisplay((prev) => (prev += e.key));
+    if (regEx.test(latestKeyboardInput))
+      setDisplay((prev) => (prev += latestKeyboardInput));
 
-    if (mainOperators.test(e.key)) {
-      setOperators([e.key, ...operators]);
+    if (mainOperators.test(latestKeyboardInput)) {
+      setOperators([latestKeyboardInput, ...operators]);
 
       const input = display.split(mainOperators);
       const latestInput = +input[input.length - 1];
       const prevOperator = operators[0];
 
       setResult((prev) =>
-        prevOperator === "+"
+        prev === null
+          ? latestInput
+          : prevOperator === "+"
           ? (prev += latestInput)
           : prevOperator === "-"
           ? (prev -= latestInput)
@@ -39,18 +48,18 @@ function App() {
       );
     }
 
-    if (e.key === BACK_SPACE || e.target.innerText === AC) {
+    if (latestKeyboardInput === BACK_SPACE || e.target.innerText === AC) {
       setDisplay("");
       setResult(0);
       setOperators([]);
       console.clear();
     }
 
-    if (/=/.test(e.key) || e.target.innerText === EQUALS) {
+    if (/=/.test(latestKeyboardInput) || e.target.innerText === EQUALS) {
       setDisplay(result);
     }
 
-    // if (/\d|[*\-/+.]/.test(e.target.innerText)) {
+    // if (regEx.test(e.target.innerText)) {
     //   setDisplay((prev) => (prev += e.target.innerText));
     // }
   };
@@ -68,7 +77,7 @@ function App() {
       <div className="container">
         <div id="display">
           <div className="equation">{display}</div>
-          <div className="result">{result}</div>
+          <div className="result">{result === null ? 0 : result}</div>
         </div>
         <div className="btns">
           <div className="row first-row">
