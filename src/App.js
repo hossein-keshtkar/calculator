@@ -19,18 +19,18 @@ function App() {
       return;
     }
 
+    if (regEx.test(e.key)) setDisplay((prev) => (prev += e.key));
+
     if (mainOperators.test(e.key)) {
+      setOperators([e.key, ...operators]);
+
       const input = display.split(mainOperators);
       const latestInput = +input[input.length - 1];
-
-      setOperators([e.key, ...operators]);
-      console.log({ latestInput, operators });
-
       const prevOperator = operators[0];
 
       setResult((prev) =>
         prev === 0
-          ? +input
+          ? latestInput
           : prevOperator === "+"
           ? (prev += latestInput)
           : prevOperator === "-"
@@ -41,8 +41,6 @@ function App() {
       );
     }
 
-    if (regEx.test(e.key)) setDisplay((prev) => (prev += e.key));
-
     if (e.key === BACK_SPACE || e.target.innerText === AC) {
       setDisplay("");
       setResult(0);
@@ -51,7 +49,7 @@ function App() {
     }
 
     if (/=/.test(e.key) || e.target.innerText === EQUALS) {
-      console.log(display.split(/[-+*/]/g));
+      setDisplay(result);
     }
 
     // if (/\d|[*\-/+.]/.test(e.target.innerText)) {
