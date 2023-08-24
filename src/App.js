@@ -29,9 +29,7 @@ function App() {
       const prevOperator = operators[0];
 
       setResult((prev) =>
-        prev === 0
-          ? latestInput
-          : prevOperator === "+"
+        prevOperator === "+"
           ? (prev += latestInput)
           : prevOperator === "-"
           ? (prev -= latestInput)
