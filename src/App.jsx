@@ -30,6 +30,14 @@ function App() {
     );
   };
 
+  const changeingOperator = (latestKeyboardInput) => {
+    setDisplay(
+      (prev) => prev.substring(0, prev.length - 1) + latestKeyboardInput
+    );
+    setOperators([latestKeyboardInput, ...operators]);
+    return;
+  };
+
   const clearHandler = () => {
     setDisplay("");
     setResult(0);
