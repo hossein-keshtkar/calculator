@@ -1,0 +1,26 @@
+.container {
+  position: absolute;
+  top: 0;
+  height: 30%;
+  width: 100%;
+  text-align: end;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.equation {
+  padding: 0 10px;
+  font-size: 1.6rem;
+  color: #999;
+  font-family: sans-serif;
+  font-weight: 100;
+}
+
+.result {
+  padding-right: 10px;
+  font-size: 3.2rem;
+  font-weight: 200;
+  font-family: sans-serif;
+}
