@@ -6,6 +6,7 @@ import { reducer } from "./manager/reducer";
 import { mainFunction } from "./funcs/mainFunction";
 import "./App.css";
 import { init } from "./data/init";
+import Mode from "./components/Mode";
 
 function App() {
   const [state, dispatch] = useReducer(reducer, init);
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <div className="App">
+      <Mode />
       <code>keyboard is supported</code>
       <Display state={state} />
       <Buttons state={state} dispatch={dispatch} />
