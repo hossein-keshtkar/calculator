@@ -26,6 +26,7 @@ function App() {
 
   return (
     <div className="App">
+      <code>keyboard is supported</code>
       <Display state={state} />
       <Buttons state={state} dispatch={dispatch} />
       <footer>
