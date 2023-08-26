@@ -1,4 +1,4 @@
-# Check out: [https://hossein-keshtkar/calculator](https://hossein-keshtkar/calculator)
+# Check out: [https://hossein-keshtkar.github.io/calculator](https://hossein-keshtkar.github.io/calculator)
 
 ---
 
