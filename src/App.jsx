@@ -32,7 +32,7 @@ function App() {
   return (
     <div className="App">
       <Display state={state} />
-      <Buttons dispatch={dispatch} />
+      <Buttons state={state} dispatch={dispatch} />
       <footer>
         Developed by <em> Hossein Keshtkar</em>. <br /> August 2023
       </footer>

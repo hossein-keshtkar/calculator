@@ -1,18 +1,28 @@
 import React from "react";
 
 import "../styles/Buttons.css";
-import { AC, NUMBER1 } from "../constants/keywords";
+import { AC, NUMBER1, OPERATOR } from "../constants/keywords";
+import { dotValidator } from "../funcs/dotValidator";
 
-const Buttons = ({ dispatch }) => {
+const Buttons = ({ state, dispatch }) => {
   const numbers = /\d|\./;
+  const operators = /[-+/*]/;
 
   const btnClickHandler = (e) => {
     const pressedBtnValue = e.target.innerText;
 
     if (pressedBtnValue === AC) console.clear();
 
-    if (numbers.test(pressedBtnValue))
+    if (numbers.test(pressedBtnValue)) {
+      const isDotIncluded = dotValidator(state.num1, pressedBtnValue);
+
+      if (isDotIncluded) return;
+
       dispatch({ type: NUMBER1, payload: pressedBtnValue });
+    }
+
+    if (operators.test(pressedBtnValue))
+      dispatch({ type: OPERATOR, payload: pressedBtnValue });
   };
 
   return (

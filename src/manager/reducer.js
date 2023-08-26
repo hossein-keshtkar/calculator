@@ -3,7 +3,7 @@ import { NUMBER1, OPERATOR } from "../constants/keywords";
 export const reducer = (state, action) => {
   switch (action.type) {
     case OPERATOR:
-      return { ...state, operator: state.operator + action.payload };
+      return { ...state, operator: action.payload };
     case NUMBER1:
       return {
         ...state,
