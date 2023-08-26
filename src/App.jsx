@@ -5,16 +5,10 @@ import Buttons from "./components/Buttons";
 import { reducer } from "./manager/reducer";
 import { mainFunction } from "./funcs/mainFunction";
 import "./App.css";
+import { init } from "./data/init";
 
 function App() {
-  const initialData = {
-    display: "",
-    result: null,
-    num1: null,
-    num2: null,
-    operator: null,
-  };
-  const [state, dispatch] = useReducer(reducer, initialData);
+  const [state, dispatch] = useReducer(reducer, init);
 
   const keydownHandler = (e) => {
     const pressedKey = e.key;
