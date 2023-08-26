@@ -1,9 +1,19 @@
 import React from "react";
 
-import styles from "../styles/Buttons.css";
+import "../styles/Buttons.css";
+import { AC, NUMBER1 } from "../constants/keywords";
 
-const Buttons = () => {
-  const btnClickHandler = (e) => {};
+const Buttons = ({ dispatch }) => {
+  const numbers = /\d|\./;
+
+  const btnClickHandler = (e) => {
+    const pressedBtnValue = e.target.innerText;
+
+    if (pressedBtnValue === AC) console.clear();
+
+    if (numbers.test(pressedBtnValue))
+      dispatch({ type: NUMBER1, payload: pressedBtnValue });
+  };
 
   return (
     <div className="container">

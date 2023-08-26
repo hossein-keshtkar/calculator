@@ -1,15 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer } from "react";
 
 import "./App.css";
-import { AC, BACK_SPACE, EQUALS } from "./utils/keywords";
+// import { AC, BACK_SPACE, EQUALS } from "./utils/keywords";
 
 import Display from "./components/Display";
 import Buttons from "./components/Buttons";
+import { reducer } from "./manager/reducer";
 
 function App() {
+  const initialData = {
+    display: "",
+    result: null,
+    num1: null,
+    num2: null,
+    operator: null,
+  };
+  const [state, dispatch] = useReducer(reducer, initialData);
+
   const keydownHandler = (e) => {};
 
   useEffect(() => {
+    console.log(state);
+
     window.addEventListener("keydown", keydownHandler);
 
     return () => {
@@ -19,8 +31,8 @@ function App() {
 
   return (
     <div className="App">
-      <Display />
-      <Buttons />
+      <Display state={state} />
+      <Buttons dispatch={dispatch} />
       <footer>
         Developed by <em> Hossein Keshtkar</em>. <br /> August 2023
       </footer>
