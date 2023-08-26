@@ -1,7 +1,7 @@
 import React from "react";
 
 import "../styles/Buttons.css";
-import { AC, NUMBER1, OPERATOR } from "../constants/keywords";
+import { AC, DISPLAY, NUMBER1, OPERATOR } from "../constants/keywords";
 import { dotValidator } from "../funcs/dotValidator";
 
 const Buttons = ({ state, dispatch }) => {
@@ -13,7 +13,7 @@ const Buttons = ({ state, dispatch }) => {
 
     if (pressedBtnValue === AC) console.clear();
 
-    if (numbers.test(pressedBtnValue)) {
+    if (!state.num2 && !state.operator && numbers.test(pressedBtnValue)) {
       const isDotIncluded = dotValidator(state.num1, pressedBtnValue);
 
       if (isDotIncluded) return;
@@ -23,6 +23,11 @@ const Buttons = ({ state, dispatch }) => {
 
     if (operators.test(pressedBtnValue))
       dispatch({ type: OPERATOR, payload: pressedBtnValue });
+
+    dispatch({
+      type: DISPLAY,
+      payload: state.num1 + state.operator + state.num2,
+    });
   };
 
   return (
