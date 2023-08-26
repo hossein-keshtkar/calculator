@@ -12,5 +12,4 @@ export const resetState = (dispatch) => {
   dispatch({ type: OPERATOR, payload: null });
   dispatch({ type: RESULT, payload: null });
   dispatch({ type: DISPLAY, payload: "" });
-  console.clear();
 };
