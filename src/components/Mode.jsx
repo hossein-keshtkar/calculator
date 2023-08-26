@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { FiSun } from "react-icons/fi";
+import { FiMoon } from "react-icons/fi";
 
 import styles from "../styles/Mode.module.css";
 
@@ -15,7 +17,9 @@ const Mode = () => {
 
   return (
     <div className={styles.container} onClick={clickHandler}>
-      <div className={styles.circle} style={inlineStyles}></div>
+      <div className={styles.circle} style={inlineStyles}>
+        {!isClicked ? <FiMoon /> : <FiSun />}
+      </div>
     </div>
   );
 };
