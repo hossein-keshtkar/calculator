@@ -1,6 +1,9 @@
 import React from "react";
 
 import "../styles/Buttons.css";
+import { dotValidator } from "../funcs/dotValidator";
+import { resetState } from "../funcs/resetState";
+import { calculator } from "../funcs/calculator";
 import {
   AC,
   DISPLAY,
@@ -9,8 +12,6 @@ import {
   OPERATOR,
   RESULT,
 } from "../constants/keywords";
-import { dotValidator } from "../funcs/dotValidator";
-import { resetState } from "../funcs/resetState";
 
 const Buttons = ({ state, dispatch }) => {
   const numbers = /\d|\./;
@@ -23,7 +24,11 @@ const Buttons = ({ state, dispatch }) => {
       resetState(dispatch);
     }
 
-    if (!state.num2 && !state.operator && numbers.test(pressedBtnValue)) {
+    if (
+      state.num2 === null &&
+      state.operator === null &&
+      numbers.test(pressedBtnValue)
+    ) {
       const isDotIncluded = dotValidator(state.num1, pressedBtnValue);
 
       if (isDotIncluded) return;
@@ -33,6 +38,32 @@ const Buttons = ({ state, dispatch }) => {
 
     if (operators.test(pressedBtnValue))
       dispatch({ type: OPERATOR, payload: pressedBtnValue });
+
+    if (
+      state.num1 !== null &&
+      state.operator &&
+      numbers.test(pressedBtnValue)
+    ) {
+      const isDotIncluded = dotValidator(state.num2, pressedBtnValue);
+
+      if (isDotIncluded) return;
+
+      dispatch({ type: NUMBER2, payload: pressedBtnValue });
+    }
+
+    if (
+      state.num1 !== null &&
+      state.operator &&
+      state.num2 !== null &&
+      operators.test(pressedBtnValue)
+    ) {
+      const result = calculator(state.num1, state.num2, state.operator);
+      dispatch({ type: RESULT, payload: result });
+      dispatch({ type: NUMBER1, payload: null });
+      dispatch({ type: NUMBER1, payload: result });
+      dispatch({ type: NUMBER2, payload: null });
+      dispatch({ type: OPERATOR, payload: pressedBtnValue });
+    }
 
     dispatch({
       type: DISPLAY,
