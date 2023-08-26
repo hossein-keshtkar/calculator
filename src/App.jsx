@@ -6,6 +6,7 @@ import "./App.css";
 import Display from "./components/Display";
 import Buttons from "./components/Buttons";
 import { reducer } from "./manager/reducer";
+import { mainFunction } from "./funcs/mainFunction";
 
 function App() {
   const initialData = {
@@ -17,11 +18,13 @@ function App() {
   };
   const [state, dispatch] = useReducer(reducer, initialData);
 
-  const keydownHandler = (e) => {};
+  const keydownHandler = (e) => {
+    const pressedKey = e.key;
+
+    mainFunction(state, dispatch, pressedKey);
+  };
 
   useEffect(() => {
-    console.log(state);
-
     window.addEventListener("keydown", keydownHandler);
 
     return () => {
