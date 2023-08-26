@@ -6,3 +6,6 @@ export const NUMBER2 = "NUMBER2";
 export const OPERATOR = "OPERATOR";
 export const DISPLAY = "DISPLAY";
 export const RESULT = "RESULT";
+export const MODE = "MODE";
+export const DARK = "DARK";
+export const LIGHT = "LIGHT";

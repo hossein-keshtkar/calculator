@@ -1,4 +1,10 @@
-import { NUMBER1, NUMBER2, OPERATOR, RESULT } from "../constants/keywords";
+import {
+  MODE,
+  NUMBER1,
+  NUMBER2,
+  OPERATOR,
+  RESULT,
+} from "../constants/keywords";
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -26,6 +32,8 @@ export const reducer = (state, action) => {
       };
     case RESULT:
       return { ...state, result: action.payload };
+    case MODE:
+      return { ...state, mode: action.payload };
     default:
       return state;
   }
