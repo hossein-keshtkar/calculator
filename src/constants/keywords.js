@@ -9,3 +9,5 @@ export const RESULT = "RESULT";
 export const MODE = "MODE";
 export const DARK = "DARK";
 export const LIGHT = "LIGHT";
+export const GHOST_WHITE = "ghostwhite";
+export const DODGER_BLUE = "dodgerblue";
