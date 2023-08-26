@@ -1,4 +1,11 @@
-import { AC, EQUALS, NUMBER1, NUMBER2, OPERATOR } from "../constants/keywords";
+import {
+  AC,
+  BACK_SPACE,
+  EQUALS,
+  NUMBER1,
+  NUMBER2,
+  OPERATOR,
+} from "../constants/keywords";
 import { calcWhenEqualsPressed } from "./calcWhenEqualsPressed";
 import { calcWhenOperatorPressed } from "./calcWhenOperatorPressed";
 import { dotValidator } from "./dotValidator";
@@ -9,7 +16,7 @@ export const mainFunction = (state, dispatch, key) => {
   const numbers = /\d|\./;
   const operators = /[-+/*]/;
 
-  if (key === AC) {
+  if (key === AC || key === BACK_SPACE) {
     resetState(dispatch);
     return;
   }

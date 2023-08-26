@@ -1,12 +1,10 @@
 import { useEffect, useReducer } from "react";
 
-import "./App.css";
-// import { AC, BACK_SPACE, EQUALS } from "./utils/keywords";
-
 import Display from "./components/Display";
 import Buttons from "./components/Buttons";
 import { reducer } from "./manager/reducer";
 import { mainFunction } from "./funcs/mainFunction";
+import "./App.css";
 
 function App() {
   const initialData = {
